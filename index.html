@@ -7,52 +7,40 @@
 
 <style>
   
-.button {
+ul {
+  list-style-type: none;
   vertical-align: middle;
-  display: inline-block;
-  background-color: #AAAAAA;
-  border: none;
-  color: #FFFFFF;
-  text-align: left;
-  font-size: 18px;
-  padding: 5px;
+  margin: 0;
+  padding: 0;
   width: 100%;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
+  background-color: #AAAAAA;
 }
 
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
+li a {
+  display: block;
+  vertical-align: middle;
+  color: #FFFFFF;
+  padding: 8px 16px;
+  text-decoration: none;
 }
 
-.button img {
+li a.active {
+  background-color: #4CAF50;
+  vertical-align: middle;
+  color: white;
+}
+
+li a:hover:not(.active) {
+  background-color: #555;
+  vertical-align: middle;
+  color: white;
+}
+
+chlogo img {
   vertical-align: middle;
   margin-right: 1%;
   height: 30px;
 }
-
-.button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-}
-
-.button:hover span {
-  padding-right: 25px;
-}
-
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-
 </style>
 </head>
 <body>
@@ -61,15 +49,16 @@
 <div id="player"></div>
 <br>
     <div id="control">
-      電視直播：
-      <button id="channel_31" class="button"><chlogo><img src="https://static1.squarespace.com/static/5d485aef6ee4440001d28adc/t/5d49cd98d1f9b1000183b50e/1565117849007/rthk31.png"></chlogo><span>港台電視 31</span></button>
-<button id="channel_32" class="button"><chlogo><img src="https://static1.squarespace.com/static/5d485aef6ee4440001d28adc/t/5d49cd9fb87e0400019b43a4/1565117855557/rthk32.png"></chlogo><span>港台電視 32</span></button>
-<button id="channel_77" class="button"><chlogo><img src="https://static1.squarespace.com/static/5d485aef6ee4440001d28adc/t/5d49cd805ecf02000123aa7e/1565117824256/hkopentv.png"></chlogo><span>香港開電視</span></button>
-<button id="channel_99" class="button"><chlogo><img src="https://static1.squarespace.com/static/5d485aef6ee4440001d28adc/t/5d49cda5bf13a80001bfdf44/1565117861147/viutv.png"></chlogo><span>ViuTV</span></button>
-<button id="channel_332" class="button"><chlogo><img src="https://static1.squarespace.com/static/5d485aef6ee4440001d28adc/t/5d49cd8a03f6fc0001790f67/1565117834711/now331.png"></chlogo><span>Now 新聞台</span></button>
-<button id="channel_331" class="button"><chlogo><img src="https://static1.squarespace.com/static/5d485aef6ee4440001d28adc/t/5d49cd91d1f9b1000183b4c9/1565117841278/now332.png"></chlogo><span>Now 直播台</span></button>
-<button id="channel_109" class="button"><span>有線新聞台</span></button>
-<button id="channel_110" class="button"><span>有線直播新聞台</span></button>
+    <ul>
+    <li><a id="channel_31"><chlogo><img src="https://static1.squarespace.com/static/5d485aef6ee4440001d28adc/t/5d49cd98d1f9b1000183b50e/1565117849007/rthk31.png"></chlogo>港台電視 31</a></li>
+    <li><a id="channel_32"><chlogo><img src="https://static1.squarespace.com/static/5d485aef6ee4440001d28adc/t/5d49cd9fb87e0400019b43a4/1565117855557/rthk32.png"></chlogo>港台電視 32</a></li>
+    <li><a id="channel_77"><chlogo><img src="https://static1.squarespace.com/static/5d485aef6ee4440001d28adc/t/5d49cd805ecf02000123aa7e/1565117824256/hkopentv.png"></chlogo>香港開電視</a></li>
+    <li><a id="channel_99"><chlogo><img src="https://static1.squarespace.com/static/5d485aef6ee4440001d28adc/t/5d49cda5bf13a80001bfdf44/1565117861147/viutv.png"></chlogo>ViuTV</a></li>
+    <li><a id="channel_332"><chlogo><img src="https://static1.squarespace.com/static/5d485aef6ee4440001d28adc/t/5d49cd8a03f6fc0001790f67/1565117834711/now331.png"></chlogo>Now 新聞台</a></li>
+    <li><a id="channel_331"><chlogo><img src="https://static1.squarespace.com/static/5d485aef6ee4440001d28adc/t/5d49cd91d1f9b1000183b4c9/1565117841278/now332.png"></chlogo>Now 直播台</a></li>
+    <li><a id="channel_109">有線新聞台</a></li>
+    <li><a id="channel_110">有線直播新聞台</a></li>
+    </ul>
     </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -81,20 +70,17 @@ jwplayer("player").setup({
   width: '100%',
   aspectratio: '16:9'
 });
-
 $play = function(channel) {
   jwplayer("player").setup({
     file: 'live/' + channel + '.m3u8'
   });
 }
-
 $playURL = function(url) {
   jwplayer("player").setup({
     file: url
   });
 }
-
-$("div#control button").click(function() {
+$("div#control a").click(function() {
   if(this.id == 'channel_77') {
     $playURL('http://media.fantv.hk/m3u8/archive/channel2_stream1.m3u8');
   }
