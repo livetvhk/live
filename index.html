@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-  
-  
+
+
 ul {
   list-style-type: none;
   vertical-align: middle;
@@ -41,7 +41,7 @@ li.active {
 
 li a:hover:not(.active) {
   background-color: #555;
-  vertical-align: middle;
+  vertica-l-align: middle;
   color: white;
   font-family: sans-serif;
 }
@@ -51,10 +51,11 @@ chlogo img {
   margin-right: 5px;
   height: 30px;
 }
-  
+
 h5 {
 }
 </style>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.min.js"></script>
 </head>
 <body>
 
@@ -70,70 +71,70 @@ h5 {
     <li><a id="channel_99"><chlogo><img src="./logo/viutv.png"></chlogo>ViuTV</a></li>
     <li><a id="channel_332"><chlogo><img src="./logo/now332.png"></chlogo>Now新聞台</a></li>
     <li><a id="channel_331"><chlogo><img src="./logo/now331.png"></chlogo>Now直播台</a></li>
-    <li><a id="channel_109"><chlogo><img src="./logo/cablenews.png"></chlogo>有線新聞台 已修復</a></li>
-    <li><a id="channel_110"><chlogo><img src="./logo/cablenewslive.png"></chlogo>有線直播新聞台 維修中</a></li>
+    <li><a id="channel_108"><chlogo><img src="./logo/cablefinance.png"></chlogo>有線財經資訊台</a></li>
+    <li><a id="channel_109"><chlogo><img src="./logo/cablenews.png"></chlogo>有線新聞台</a></li>
+    <li><a id="channel_110"><chlogo><img src="./logo/cablenewslive.png"></chlogo>有線直播新聞台</a></li>
     </ul>
     </div>
   <div id="disclaimer"><h5>注意！ 所有直播源均於互聯網採集並於播放器外部引用，本站只提供線上播放器服務，並不會儲存、制作或分發任何內容。</h5></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://content.jwplatform.com/libraries/wr6i4gal.js"></script>
 <script>
-jwplayer("player").setup({
-  file: 'https://www.rthk.hk/feeds/dtt/rthktv31_https.m3u8',
-  allowfullscreen: true,
-  width: '100%',
-  aspectratio: '16:9'
-});
-$play = function(channel) {
-  jwplayer("player").setup({
-    file: 'live/' + channel + '.m3u8'
-  });
-}
+var player = new Clappr.Player({source: "https://rthklive1-lh.akamaihd.net/i/rthk31_1@167495/index_2052_av-b.m3u8?sd=10&rebase=on", autoPlay: true, width: "100%", parentId: "#player"});
+
 $playURL = function(url) {
-  jwplayer("player").setup({
-    file: url
-  });
-}
+  player.configure({
+  source: url
+})
+};
+
 $("div#control a").click(function() {
   if(this.id == 'channel_77') {
     $playURL('http://media.fantv.hk/m3u8/archive/channel2_stream1.m3u8');
   }
-  
-  else if(this.id == 'channel_109') {
-    $playURL('http://hls2.live.126.net/live/ba1b02a3a6873cff68b24b5fb821c92c59e/playlist.m3u8');
+
+  else if(this.id == 'channel_108') {
+    $.get("http://epg.cmishow.com/?s=65&p=yhsLiveChannel&k=1&v=1&c=1&a=852&i=1&channelId=1568275470170088006", function(data) {
+      $playURL(data.data.detail.livePlayUrl);
+    }, "json");
   }
-  
+
+  else if(this.id == 'channel_109') {
+    $.get("http://epg.cmishow.com/?s=65&p=yhsLiveChannel&k=1&v=1&c=1&a=852&i=1&channelId=1568275619470108006", function(data) {
+      $playURL(data.data.detail.livePlayUrl);
+    }, "json");
+  }
+
   else if(this.id == 'channel_110') {
     $playURL('http://141av.ga/live/channel_110.m3u8');
   }
-  
+
   else if(this.id == 'channel_31') {
     $playURL('https://www.rthk.hk/feeds/dtt/rthktv31_https.m3u8');
   }
-  
+
   else if(this.id == 'channel_32') {
     $playURL('https://www.rthk.hk/feeds/dtt/rthktv32_https.m3u8');
   }
-  
+
   else if(this.id == 'channel_331') {
     $.post("https://hkt-mobile-api.nowtv.now.com/09/1/getLiveURL", '{"channelno":"331","format":"HLS"}', function(data) {
       $playURL(data.asset.hls.adaptive[0]);
     }, "json");
   }
-  
+
   else if(this.id == 'channel_332') {
     $.post("https://hkt-mobile-api.nowtv.now.com/09/1/getLiveURL", '{"channelno":"332","format":"HLS"}', function(data) {
       $playURL(data.asset.hls.adaptive[0]);
     }, "json");
   }
-  
+
   else if(this.id == 'channel_99') {
     $.post("https://api.viu.now.com/p8/1/getLiveURL", '{"channelno":"099","deviceId":"0000anonymous_user","format":"HLS"}', function(data) {
       $playURL(data.asset.hls.adaptive[0]);
     }, "json");
   }
-  
+
   else {
     $play(this.id);
   }
@@ -141,7 +142,6 @@ $("div#control a").click(function() {
 });
 </script>
 
-  
+
 </body>
 </html>
-
